@@ -40,7 +40,7 @@ describe('Products', () => {
     });
   });
 
-  describe('Post /products/add', () => {
+  describe('Post /products', () => {
     it('Should create a new product', (done) => {
       const newProduct = {
         name: 'product 1',
@@ -48,7 +48,7 @@ describe('Products', () => {
         quantity: 15,
       };
       chai.request(app)
-        .post('/products/add')
+        .post('/products')
         .send(newProduct)
         .end((error, res) => {
           if (error) done(error);
@@ -66,16 +66,17 @@ describe('Products', () => {
         price: 222,
         quantity: 15,
       };
+      const updateProduct = {
+        name: 'new Product',
+      }
       Product.create(newProduct, (error, product) => {
         chai.request(app)
           .put(`/products/${product._id}`)
-          .send({
-            name: 'new Product',
-          })
+          .send(updateProduct)
           .end((err, res) => {
             if (err) done(err);
             expect(res.statusCode).to.equal(200);
-            expect(res.body).to.equal('Product updated Successfully');
+            expect(res.body.name).to.equal(updateProduct.name);
             done();
           });
       });

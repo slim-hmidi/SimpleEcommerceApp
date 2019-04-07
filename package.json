@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint ./server/* --ext .js,.json",
+    "lint": "eslint ./server/**/* --ext .js,.json",
     "start": "nodemon ./server/app.js",
     "test": "mocha ./server/test/**/*.js --timeout 10000 --exit"
   },

@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
+const { devUrl, testUrtl } = require('../config');
 
-// database url
-const testUrtl = 'mongodb://localhost:27017/test';
-const devUrl = 'mongodb://localhost:27017/db';
 
 let url = devUrl;
 if (process.env.NODE_ENV === 'test') {
