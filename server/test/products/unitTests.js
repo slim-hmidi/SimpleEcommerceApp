@@ -99,14 +99,12 @@ describe('Unit Tests', () => {
                 }
                 const id = mongoose.Types.ObjectId();
                 const ProductMock = sinon.mock(new Product(updateBody));
-                console.log(id);
                 const product = ProductMock.object;
                 const expectedResult = {    
                     statusCode: 200
                 }
-                
-                ProductMock.expects('findOneAndUpdate').withArgs({ _id: id }).yields(expectedResult, null);
-                product.findOneAndUpdate(id, updateBody, (error, res) => {
+                ProductMock.expects('save').withArgs({ _id: id }).yields(null, expectedResult);
+                product.save({ _id: id }, (error, res) => {
                     if (error) done(error)
                     ProductMock.verify();
                     ProductMock.restore();
