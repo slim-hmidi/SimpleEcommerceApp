@@ -38,14 +38,14 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "Products found successfully!",
             "schema": {
               "$ref": "#/definitions/CreatedProduct"
             }
           },
-          "400": {
-            "description": "A product already exists"
+          "404": {
+            "description": "Product not found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -218,9 +218,6 @@
             "schema": {
               "$ref": "#/definitions/DeletedProduct"
             }
-          },
-          "400": {
-            "description": "Unable to delete the product"
           },
           "404": {
             "description": "Product to delete is not found!"

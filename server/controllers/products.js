@@ -67,7 +67,7 @@ module.exports.getProduct = async (req, res) => {
     if (fetchedProduct) {
       return res.success(200, fetchedProduct);
     }
-    return res.error(400, 'Unable to get product');
+    return res.error(404, 'Product not found');
   } catch (error) {
     return res.error(500, error);
   }
@@ -106,14 +106,6 @@ module.exports.updateProduct = async (req, res) => {
 module.exports.deleteProduct = async (req, res) => {
   const { id } = req.params;
 
-  // check if the product exists
-  const fetchedProduct = await Product.findById(id);
-
-  // return an error message when the product does not exists
-  if (!fetchedProduct) {
-    return res.error(404, 'Product to delete is not found!');
-  }
-
   try {
     const deletedProduct = await Product.findByIdAndDelete(id);
     if (deletedProduct) {
@@ -121,7 +113,7 @@ module.exports.deleteProduct = async (req, res) => {
         // eslint-disable-next-line no-underscore-dangle
         .success(200, deletedProduct._id);
     }
-    return res.error(400, 'Unable to delete the Product');
+    return res.error(404, 'Product to delete is not found!');
   } catch (error) {
     return res.error(500, error);
   }
