@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint --ext .js,.json ./server/*",
+    "lint": "eslint ./server/* --ext .js,.json",
     "start": "nodemon ./server/app.js",
     "test": "mocha ./server/test/**/*.js --timeout 10000 --exit"
   },
@@ -41,6 +41,7 @@
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-json": "^1.4.0",
     "mocha": "^6.0.2"
   }
 }
