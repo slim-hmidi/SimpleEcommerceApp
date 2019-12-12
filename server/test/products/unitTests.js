@@ -12,7 +12,7 @@ describe('Unit Tests', () => {
         describe('GET /products', () => {
             it('should return a product list', (done) => {
                 const ProductMock = sinon.mock(Product);
-                const expectedResult = {    
+                const expectedResult = {
                     statusCode: 200,
                     body: []
                 }
@@ -30,7 +30,7 @@ describe('Unit Tests', () => {
         describe('GET /products', () => {
             it('should return an error when it is unable to get the product list', (done) => {
                 const ProductMock = sinon.mock(Product);
-                const expectedResult = {    
+                const expectedResult = {
                     statusCode: 500,
                     error: 'Internal server error'
                 }
@@ -54,7 +54,7 @@ describe('Unit Tests', () => {
                 }
                 const ProductMock = sinon.mock(new Product(productToCreate));
                 const product = ProductMock.object;
-                const expectedResult = {    
+                const expectedResult = {
                     statusCode: 201,
                     body: product
                 }
@@ -76,7 +76,7 @@ describe('Unit Tests', () => {
                 }
                 const ProductMock = sinon.mock(new Product(productToCreate));
                 const product = ProductMock.object;
-                const expectedResult = {    
+                const expectedResult = {
                     statusCode: 400,
                     error: 'Product price is required'
                 }
@@ -100,7 +100,7 @@ describe('Unit Tests', () => {
                 const id = mongoose.Types.ObjectId();
                 const ProductMock = sinon.mock(Product);
                 const product = ProductMock.object;
-                const expectedResult = {    
+                const expectedResult = {
                     statusCode: 200
                 }
                 ProductMock.expects('findOneAndUpdate').withArgs({ _id: id }, updateBody).yields(null, expectedResult);
@@ -117,7 +117,7 @@ describe('Unit Tests', () => {
                 const updateBody = {}
                 const ProductMock = sinon.mock(new Product(updateBody));
                 const product = ProductMock.object;
-                const expectedResult = {    
+                const expectedResult = {
                     statusCode: 400,
                     error: 'Procut body should not be empty'
                 }
@@ -137,7 +137,7 @@ describe('Unit Tests', () => {
         describe('GET /products/:id', () => {
             it('Should get a product successfully', (done) => {
                 const ProductMock = sinon.mock(Product);
-                const expectedResult = {    
+                const expectedResult = {
                     statusCode: 200,
                     body: {
                         name: 'product',
@@ -159,7 +159,7 @@ describe('Unit Tests', () => {
 
             it('Should returns 404 when a product is not found', (done) => {
                 const ProductMock = sinon.mock(Product);
-                const expectedResult = {    
+                const expectedResult = {
                     statusCode: 404,
                     error: 'Product not found'
                 }
@@ -181,7 +181,7 @@ describe('Unit Tests', () => {
             it('Should delete a product successfully', (done) => {
                 const ProductMock = sinon.mock(Product);
                 const id = mongoose.Types.ObjectId();
-                const expectedResult = {    
+                const expectedResult = {
                     statusCode: 200,
                     body: {
                         _id: id,
@@ -200,7 +200,7 @@ describe('Unit Tests', () => {
 
             it('Should returns 404 when a product is not found', (done) => {
                 const ProductMock = sinon.mock(Product);
-                const expectedResult = {    
+                const expectedResult = {
                     statusCode: 404,
                     error: 'Product not found'
                 }

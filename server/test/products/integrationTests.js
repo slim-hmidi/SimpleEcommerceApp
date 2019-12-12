@@ -16,7 +16,7 @@ describe('Integration Tests', () => {
         done();
       });
     });
-  
+
     describe('Get /Products', () => {
       it('Should Return the list of products', (done) => {
         const newProduct1 = {
@@ -24,27 +24,27 @@ describe('Integration Tests', () => {
           price: 222,
           quantity: 15,
         };
-  
+
         const newProduct2 = {
           name: 'product 2',
           price: 222,
           quantity: 150,
         };
-  
+
         Product.insertMany(
           [newProduct1,
-          newProduct2], (err, docs) => {
-            chai.request(app)
-            .get('/products')
-            .end((error, res) => {
-              if (error) done(error);
-              expect(res.statusCode).to.equal(200);
-              expect(res.body.length).to.equal(2);
-              expect(res.body[0].name).to.equal(docs[0].name);
-              expect(res.body[1].name).to.equal(docs[1].name);
-              done();
-            });
-          })
+            newProduct2], (err, docs) => {
+              chai.request(app)
+                .get('/products')
+                .end((error, res) => {
+                  if (error) done(error);
+                  expect(res.statusCode).to.equal(200);
+                  expect(res.body.length).to.equal(2);
+                  expect(res.body[0].name).to.equal(docs[0].name);
+                  expect(res.body[1].name).to.equal(docs[1].name);
+                  done();
+                });
+            })
       });
     });
     describe('Get /Product/:id', () => {
@@ -58,7 +58,7 @@ describe('Integration Tests', () => {
           });
       });
     });
-  
+
     describe('Post /products', () => {
       it('Should create a new product', (done) => {
         const newProduct = {
@@ -77,7 +77,7 @@ describe('Integration Tests', () => {
           });
       });
     });
-  
+
     describe('PUT /products/:id', () => {
       it('Should update an existant product', (done) => {
         const newProduct = {
@@ -101,7 +101,7 @@ describe('Integration Tests', () => {
         });
       });
     });
-  
+
     describe('DELETE /products/:id', () => {
       it('Should delete an existant product', (done) => {
         const newProduct = {
@@ -109,7 +109,7 @@ describe('Integration Tests', () => {
           price: 222,
           quantity: 15,
         };
-        
+
         Product.create(newProduct, (error, product) => {
           chai.request(app)
             .delete(`/products/${product._id}`)
@@ -120,14 +120,14 @@ describe('Integration Tests', () => {
             });
         });
       });
-  
+
       it('Should returns 404 when the product already deleted', (done) => {
         const product = {
           name: 'product 1',
           price: 222,
           quantity: 15,
         };
-        
+
         Product.deleteOne(product, (error, deletedProduct) => {
           chai.request(app)
             .delete(`/products/${mongoose.Types.ObjectId()}`)
@@ -140,5 +140,5 @@ describe('Integration Tests', () => {
       });
     });
   });
-  
+
 })
