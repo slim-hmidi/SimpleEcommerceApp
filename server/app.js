@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
 const { errors } = require('celebrate');
+require('./config');
 const routes = require('./routes/index');
 const swaggerDocument = require('./swagger.json');
 require('./database/config');

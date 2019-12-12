@@ -1,6 +1,4 @@
-module.exports = {
-  // database url
-  testUrtl: 'mongodb://localhost:27017/test',
-  devUrl: 'mongodb://localhost:27017/db',
-  secret: 'ecommerce@2019',
-};
+const { resolve } = require('path');
+const { config } = require('dotenv');
+
+config({ path: resolve(__dirname, '../.env') });
