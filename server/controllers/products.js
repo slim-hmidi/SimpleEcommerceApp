@@ -1,4 +1,5 @@
 const Product = require('../models/Product');
+const { ErrorHandler } = require('../utils/error');
 
 /**
  * Create a new product
@@ -19,15 +20,15 @@ module.exports.createProduct = async (req, res) => {
 
     // verify if a product already exits
     if (foundProduct) {
-      return res.error(400, 'A product already exists');
+      throw new ErrorHandler(400, 'A product already exists');
     }
     const createdProduct = await Product.create(newProduct);
     if (createdProduct) {
       return res.success(201, createdProduct);
     }
-    return res.error(400, 'Unable to create the product');
+    throw new ErrorHandler(400, 'Unable to create the product');
   } catch (error) {
-    return res.error(500, error);
+    return res.error(error.statusCode || 500, error.message);
   }
 };
 
@@ -39,12 +40,12 @@ module.exports.createProduct = async (req, res) => {
 module.exports.getProducts = async (req, res) => {
   try {
     const fetchedProducts = await Product.find({});
-    if (fetchedProducts || !fetchedProducts.length) {
+    if (fetchedProducts) {
       return res.success(200, fetchedProducts);
     }
-    return res.error(400, 'Unable to get products');
+    throw new ErrorHandler(400, 'Unable to get products');
   } catch (error) {
-    return res.error(500, error);
+    return res.error(error.statusCode, error.message);
   }
 };
 
@@ -60,9 +61,9 @@ module.exports.getProduct = async (req, res) => {
     if (fetchedProduct) {
       return res.success(200, fetchedProduct);
     }
-    return res.error(404, 'Product not found');
+    throw new ErrorHandler(404, 'Product not found');
   } catch (error) {
-    return res.error(500, error);
+    return res.error(error.statusCode || 500, error.message);
   }
 };
 /**
@@ -78,7 +79,7 @@ module.exports.updateProduct = async (req, res) => {
 
     // return an error message when the product does not exists
     if (!fetchedProduct) {
-      return res.error(404, 'Product to update is not found!');
+      throw new ErrorHandler(404, 'Product to update is not found!');
     }
     const updatedProduct = await Product.findOneAndUpdate(id, req.body, {
       new: true,
@@ -86,9 +87,9 @@ module.exports.updateProduct = async (req, res) => {
     if (updatedProduct) {
       return res.success(200, updatedProduct);
     }
-    return res.error(400, 'Unable to update the Product');
+    throw new ErrorHandler(400, 'Unable to update the Product');
   } catch (error) {
-    return res.error(500, error);
+    return res.error(error.statusCode || 500, error.message);
   }
 };
 
@@ -109,8 +110,8 @@ module.exports.deleteProduct = async (req, res) => {
           .success(200, deletedProduct._id)
       );
     }
-    return res.error(404, 'Product to delete is not found!');
+    throw new ErrorHandler(404, 'Product to delete is not found!');
   } catch (error) {
-    return res.error(500, error);
+    return res.error(error.statusCode || 500, error.message);
   }
 };

@@ -46,16 +46,50 @@ describe('Integration Tests', () => {
                 });
             })
       });
-    });
-    describe('Get /Product/:id', () => {
-      it('Should return 400 when the id is not valid', (done) => {
+
+      it('Should Return an empty list of products', (done) => {
         chai.request(app)
-          .get('/products/1')
+          .get('/products')
           .end((error, res) => {
             if (error) done(error);
-            expect(res.statusCode).to.equal(400);
+            expect(res.statusCode).to.equal(200);
+            expect(res.body.length).to.equal(0);
             done();
           });
+      })
+    });
+
+
+    describe('Get /Product/:id', () => {
+      it('Should return 404 when the id is not valid', (done) => {
+        const id = mongoose.Types.ObjectId();
+        chai.request(app)
+          .get(`/products/${id}`)
+          .end((error, res) => {
+            if (error) done(error);
+            expect(res.statusCode).to.equal(404);
+            done();
+          });
+      });
+
+      it('Should return the product successfully', (done) => {
+        const newProduct = {
+          name: 'product',
+          price: 222,
+          quantity: 15,
+        };
+
+        Product.create(
+          newProduct, (err, product) => {
+            chai.request(app)
+              .get(`/products/${product._id}`)
+              .end((error, res) => {
+                if (error) done(error);
+                expect(res.statusCode).to.equal(200);
+                expect(res.body.name).to.equal(product.name);
+                done();
+              });
+          })
       });
     });
 
@@ -75,6 +109,25 @@ describe('Integration Tests', () => {
             expect(res.body.name).to.equal('product 1');
             done();
           });
+      });
+
+      it('Should returns an error when the product already exists', (done) => {
+        const newProduct = {
+          name: 'product',
+          price: 222,
+          quantity: 15,
+        };
+        Product.create(newProduct, (err, product) => {
+          chai.request(app)
+            .post('/products')
+            .send(newProduct)
+            .end((error, res) => {
+              if (error) done(error);
+              expect(res.statusCode).to.equal(400);
+              expect(res.error.text).to.includes('A product already exists')
+              done();
+            });
+        })
       });
     });
 
@@ -99,6 +152,22 @@ describe('Integration Tests', () => {
               done();
             });
         });
+      });
+
+      it('Should returns an error when the product to update does not exist', (done) => {
+        const updateProduct = {
+          name: 'new Product',
+        }
+        const id = mongoose.Types.ObjectId();
+        chai.request(app)
+          .put(`/products/${id}`)
+          .send(updateProduct)
+          .end((err, res) => {
+            if (err) done(err);
+            expect(res.statusCode).to.equal(404);
+            expect(res.error.text).to.include('Product to update is not found!');
+            done();
+          });
       });
     });
 

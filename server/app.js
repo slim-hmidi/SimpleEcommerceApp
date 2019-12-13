@@ -6,6 +6,7 @@ require('./config');
 const routes = require('./routes/index');
 const swaggerDocument = require('./swagger.json');
 require('./database/config');
+const { errorMiddleware } = require('./utils/error');
 
 const app = express();
 
@@ -23,6 +24,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // application routes
 app.use('/', routes);
+
+// Error Middleware
+app.use(errorMiddleware);
 
 // return Validation errors
 app.use(errors());
