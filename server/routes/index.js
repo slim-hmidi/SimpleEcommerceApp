@@ -5,7 +5,6 @@ const { verifyToken } = require('../utils/verifyToken');
 
 // middleware function for response
 routes.use((req, res, next) => {
-  res.error = (statusCode, errorMessage) => res.status(statusCode).json(errorMessage);
   res.success = (statusCode, result) => res.status(statusCode).json(result);
   return next();
 });

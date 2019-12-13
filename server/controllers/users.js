@@ -27,7 +27,7 @@ module.exports.createUser = async (req, res) => {
 
     const createdUser = User.create(newUser);
     if (createdUser) {
-      return res.success(201, 'User was created successfully!!');
+      return res.success(201, createdUser);
     }
     throw new ErrorHandler(400, 'Unable to create the user');
   } catch (error) {
