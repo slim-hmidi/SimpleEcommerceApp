@@ -1,7 +1,9 @@
 module.exports = {
   env: {
     browser: true,
+    node: true,
     es6: true,
+    mocha: true,
   },
   extends: 'airbnb-base',
   globals: {
@@ -12,6 +14,10 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module',
   },
-  plugins: ['json']
-  
+  plugins: ['json'],
+  rules:
+  {
+    "import/no-extraneous-dependencies": [2, { devDependencies: true }]
+  }
+
 };

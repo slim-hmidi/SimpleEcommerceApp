@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-const { hashSync, compareSync } = require('bcrypt');
+const { compareSync } = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { ErrorHandler } = require('../utils/error');
@@ -17,17 +17,17 @@ module.exports.createUser = async (req, res) => {
     if (foundUser) {
       throw new ErrorHandler(400, 'User already exists');
     }
-    const saltRounds = 10;
-    // crypt the password before storing it in the db
-    const hashedPassword = hashSync(password, saltRounds);
     const newUser = new User({
       login,
-      password: hashedPassword,
+      password,
     });
 
-    const createdUser = User.create(newUser);
+    const createdUser = await User.create(newUser);
     if (createdUser) {
-      return res.success(201, createdUser);
+      return res.success(200, {
+        id: createdUser._id,
+        login: createdUser.login,
+      });
     }
     throw new ErrorHandler(400, 'Unable to create the user');
   } catch (error) {

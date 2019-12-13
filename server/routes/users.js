@@ -5,7 +5,7 @@ const userValidation = require('../validations/user');
 
 // POST /users/user
 userRouter
-  .route('/users/create')
+  .route('/users')
   .post(
     userValidation.addUserValidation,
     ctrlUsers.createUser,
@@ -13,7 +13,7 @@ userRouter
 
 // POST /users/authenticate
 userRouter
-  .route('/users/authenticate')
+  .route('/authenticate')
   .post(
     userValidation.addUserValidation,
     ctrlUsers.authenticateUser,
