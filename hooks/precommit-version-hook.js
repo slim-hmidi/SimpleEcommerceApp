@@ -26,9 +26,9 @@ getBranch()
                 const data = fs.readFileSync(pathToFile, 'utf8');
                 console.log(data)
                 const content = JSON.parse(data);
-                content.version = moment().format('YY.MM.DD');
+                content.version = moment("2019-01-03").format('YY.MM.DD');
                 console.log(content)
-                fs.writeFileSync(pathToFile, JSON.stringify(content));
+                fs.writeFileSync(pathToFile, JSON.stringify(content, null, 2));
                 exec(`git add ${pathToFile}`, (err, stdout, stderr) => {
                     if (err) console.log(err);
                     console.log(stdout);
