@@ -1,11 +1,6 @@
 const Product = require('../models/Product');
 const { ErrorHandler } = require('../utils/error');
 
-/**
- * Create a new product
- * @param {object} req - Express object
- * @param {object} res - Express object
- */
 module.exports.createProduct = async (req, res) => {
   const { name, price, quantity } = req.body;
 
@@ -32,11 +27,7 @@ module.exports.createProduct = async (req, res) => {
   }
 };
 
-/**
- * Get a product's list
- * @param {object} req - Express object
- * @param {object} res - Express object
- */
+
 module.exports.getProducts = async (req, res) => {
   try {
     const fetchedProducts = await Product.find({});
@@ -49,11 +40,6 @@ module.exports.getProducts = async (req, res) => {
   }
 };
 
-/**
- * Get a product
- * @param {object} req - Express object
- * @param {object} res - Express object
- */
 module.exports.getProduct = async (req, res) => {
   const { id } = req.params;
   try {
@@ -66,11 +52,7 @@ module.exports.getProduct = async (req, res) => {
     return res.error(error.statusCode || 500, error.message);
   }
 };
-/**
- * Update a product
- * @param {object} req - Express object
- * @param {object} res - Express object
- */
+
 module.exports.updateProduct = async (req, res) => {
   const { id } = req.params;
   try {
@@ -93,11 +75,7 @@ module.exports.updateProduct = async (req, res) => {
   }
 };
 
-/**
- * Delete a product
- * @param {object} req - Express object
- * @param {object} res - Express object
- */
+
 module.exports.deleteProduct = async (req, res) => {
   const { id } = req.params;
 
